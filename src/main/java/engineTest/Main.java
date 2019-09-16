@@ -1,3 +1,5 @@
+package engineTest;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
