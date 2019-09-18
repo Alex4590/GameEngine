@@ -22,6 +22,7 @@ public class DisplayManager {
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create(new PixelFormat(), attribs);
+            Display.setTitle("Display launcher");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -37,7 +38,7 @@ public class DisplayManager {
     }
 
     public static void CloseDisplay() {
-        
+
         Display.destroy();
     }
 }
