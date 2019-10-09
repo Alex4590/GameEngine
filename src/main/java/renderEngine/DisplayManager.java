@@ -1,27 +1,24 @@
 package renderEngine;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
-import org.lwjgl.opengl.DisplayMode;
-
-import java.awt.*;
 
 public class DisplayManager {
 
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
+    private static final int WIDTH = 720;
+    private static final int HEIGHT = 450;
     private static final int FPS_CAP = 120;
 
 
     public static void CreateDisplay() {
 
-        ContextAttribs attribs = new ContextAttribs(3,2);
+        ContextAttribs attribs = new ContextAttribs(3,2, ContextAttribs.CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB);
         attribs.withForwardCompatible(true);
         attribs.withProfileCore(true);
 
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create(new PixelFormat(), attribs);
+            Display.setResizable(false);
             Display.setTitle("Display launcher");
         } catch (Exception ex) {
             ex.printStackTrace();
