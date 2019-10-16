@@ -5,6 +5,7 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.RawModel;
 import renderEngine.Renderer;
+import shadersClass.StaticShader;
 
 public class MainGameLoop {
 
@@ -15,6 +16,7 @@ public class MainGameLoop {
 
         Loader loader = new Loader();
         Renderer renderer = new Renderer();
+        StaticShader shader = new StaticShader();
 
         float[] vertices = {
             -0.5f, 0.5f, 0f,  // V0
@@ -33,13 +35,16 @@ public class MainGameLoop {
         while (!Display.isCloseRequested()) {
 
             renderer.prepare();
-
+            shader.start();
             renderer.render(model);
-
+            shader.stop();
             //game logic
             //render
             DisplayManager.UpdateDispaly();
         }
+
+
+        shader.cleanUp();
 
         // vao and dao
         loader.cleanUp();
