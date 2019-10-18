@@ -2,8 +2,8 @@ package shadersClass;
 
 public class StaticShader extends ShaderProgram {
 
-    private static final String VERTEX_FILE = "C:\\Users\\aleksandr.polyakov\\IdeaProjects\\GD\\target\\classes\\shaders\\vertexShader";
-    private static final String FRAGMENT_FILE = "C:\\Users\\aleksandr.polyakov\\IdeaProjects\\GD\\target\\classes\\shaders\\fragmentShader";
+    private static final String VERTEX_FILE = "src/main/resources/vertexShader";
+    private static final String FRAGMENT_FILE = "src/main/resources/fragmentShader";
 
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
