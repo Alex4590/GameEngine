@@ -6,6 +6,8 @@ import renderEngine.Loader;
 import renderEngine.RawModel;
 import renderEngine.Renderer;
 import shadersClass.StaticShader;
+import texturesClass.ModelTexture;
+import texturesClass.TexsturedModel;
 
 public class MainGameLoop {
 
@@ -30,13 +32,22 @@ public class MainGameLoop {
             3, 1, 2 // Top Left triangle (V3, V1, V2)
         };
 
-        RawModel  model = loader.loadToVao(vertices, indices);
+        float[] textureCoords = {
+                0,0, // V0
+                0,1, // V1
+                1,1, // V2
+                1,0  // V3
+        };
+
+        RawModel  model = loader.loadToVao(vertices, textureCoords, indices);
+        ModelTexture texture = new ModelTexture(loader.loaderTexture("image"));
+        TexsturedModel texsturedModel = new TexsturedModel(model, texture);
 
         while (!Display.isCloseRequested()) {
 
             renderer.prepare();
             shader.start();
-            renderer.render(model);
+            renderer.render(texsturedModel);
             shader.stop();
             //game logic
             //render
