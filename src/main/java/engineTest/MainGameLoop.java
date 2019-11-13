@@ -15,12 +15,10 @@ public class MainGameLoop {
 
     public static void main(String[] args) {
 
-
         DisplayManager.CreateDisplay();
-
         Loader loader = new Loader();
-        Renderer renderer = new Renderer();
         StaticShader shader = new StaticShader();
+        Renderer renderer = new Renderer(shader);
 
         float[] vertices = {
             -0.5f, 0.5f, 0f,  // V0
@@ -45,19 +43,18 @@ public class MainGameLoop {
         ModelTexture texture = new ModelTexture(loader.loaderTexture("image"));
         TexsturedModel texsturedModel = new TexsturedModel(model, texture);
 
-        Entity entity = new Entity(texsturedModel, new Vector3f(-1, 0 ,0), 0, 0, 0 ,1);
+        Entity entity = new Entity(texsturedModel, new Vector3f(0, 0 ,-1), 0, 0, 0 ,1);
 
         //game logic
         //render
         while (!Display.isCloseRequested()) {
             entity.increasePosition(0.002f, 0, 0);
-            entity.increaseRotation(0, 1, 0);
+//            entity.increaseRotation(0, 1, 0);
             renderer.prepare();
             shader.start();
             renderer.render(entity, shader);
             shader.stop();
-
-            DisplayManager.UpdateDispaly();
+            DisplayManager.updateDisplay();
         }
 
 
