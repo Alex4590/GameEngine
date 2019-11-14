@@ -1,5 +1,6 @@
 package engineTest;
 
+import entities.Camera;
 import entities.Entity;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
@@ -9,61 +10,111 @@ import renderEngine.RawModel;
 import renderEngine.Renderer;
 import shadersClass.StaticShader;
 import texturesClass.ModelTexture;
-import texturesClass.TexsturedModel;
+import texturesClass.TexturedModel;
 
 public class MainGameLoop {
 
     public static void main(String[] args) {
 
-        DisplayManager.CreateDisplay();
+
+        DisplayManager.createDisplay();
         Loader loader = new Loader();
         StaticShader shader = new StaticShader();
         Renderer renderer = new Renderer(shader);
 
         float[] vertices = {
-            -0.5f, 0.5f, 0f,  // V0
-            -0.5f, -0.5f, 0f, // V1
-            0.5f, -0.5f, 0f,  // V2
-            0.5f, 0.5f, 0f,   // V3
-        };
+                -0.5f,0.5f,0,
+                -0.5f,-0.5f,0,
+                0.5f,-0.5f,0,
+                0.5f,0.5f,0,
 
-        int[] indices = {
-            0, 1, 3, // Top Left triangle (V0, V2, V3)
-            3, 1, 2 // Top Left triangle (V3, V1, V2)
+                -0.5f,0.5f,1,
+                -0.5f,-0.5f,1,
+                0.5f,-0.5f,1,
+                0.5f,0.5f,1,
+
+                0.5f,0.5f,0,
+                0.5f,-0.5f,0,
+                0.5f,-0.5f,1,
+                0.5f,0.5f,1,
+
+                -0.5f,0.5f,0,
+                -0.5f,-0.5f,0,
+                -0.5f,-0.5f,1,
+                -0.5f,0.5f,1,
+
+                -0.5f,0.5f,1,
+                -0.5f,0.5f,0,
+                0.5f,0.5f,0,
+                0.5f,0.5f,1,
+
+                -0.5f,-0.5f,1,
+                -0.5f,-0.5f,0,
+                0.5f,-0.5f,0,
+                0.5f,-0.5f,1
         };
 
         float[] textureCoords = {
-                0,0, // V0
-                0,1, // V1
-                1,1, // V2
-                1,0  // V3
+
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0,
+                0,0,
+                0,1,
+                1,1,
+                1,0
         };
 
-        RawModel  model = loader.loadToVao(vertices, textureCoords, indices);
-        ModelTexture texture = new ModelTexture(loader.loaderTexture("image"));
-        TexsturedModel texsturedModel = new TexsturedModel(model, texture);
+        int[] indices = {
+                0,1,3,
+                3,1,2,
+                4,5,7,
+                7,5,6,
+                8,9,11,
+                11,9,10,
+                12,13,15,
+                15,13,14,
+                16,17,19,
+                19,17,18,
+                20,21,23,
+                23,21,22
+        };
 
-        Entity entity = new Entity(texsturedModel, new Vector3f(0, 0 ,-1), 0, 0, 0 ,1);
+        RawModel model = loader.loadToVao(vertices,textureCoords,indices);
+        TexturedModel staticModel = new TexturedModel(model,new ModelTexture(loader.loadTexture("image-3")));
+        Entity entity = new Entity(staticModel, new Vector3f(0,0,-5),0,0,0,1);
+        Camera camera = new Camera();
 
-        //game logic
-        //render
-        while (!Display.isCloseRequested()) {
-            entity.increasePosition(0.002f, 0, 0);
-//            entity.increaseRotation(0, 1, 0);
+        while(!Display.isCloseRequested()) {
+            entity.increaseRotation(1, 1, 0);
+            camera.move();
             renderer.prepare();
             shader.start();
-            renderer.render(entity, shader);
+            shader.loadViewMatrix(camera);
+            renderer.render(entity,shader);
             shader.stop();
             DisplayManager.updateDisplay();
         }
 
-
         shader.cleanUp();
-
-        // vao and dao
         loader.cleanUp();
-        DisplayManager.CloseDisplay();
-
-
+        DisplayManager.closeDisplay();
     }
 }

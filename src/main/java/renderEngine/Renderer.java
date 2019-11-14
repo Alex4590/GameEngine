@@ -4,7 +4,7 @@ import entities.Entity;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
 import shadersClass.StaticShader;
-import texturesClass.TexsturedModel;
+import texturesClass.TexturedModel;
 import toolbox.Maths;
 
 public class Renderer {
@@ -23,12 +23,13 @@ public class Renderer {
     }
 
     public void prepare() {
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(1,0,0,1);
     }
 
     public void render(Entity entity, StaticShader shader) {
-        TexsturedModel model = entity.getModel();
+        TexturedModel model = entity.getModel();
         RawModel rawModel = model.getRawModel();
         GL30.glBindVertexArray(rawModel.getVaoID());
         GL20.glEnableVertexAttribArray(0);

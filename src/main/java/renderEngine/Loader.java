@@ -33,7 +33,7 @@ public class Loader {
         return rawModel;
     }
 
-    public int loaderTexture(String fileName) {
+    public int loadTexture(String fileName) {
         Texture texture = null;
         try {
             texture = TextureLoader.getTexture("PNG", new FileInputStream("res/" + fileName + ".png"));
