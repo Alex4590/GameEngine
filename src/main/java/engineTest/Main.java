@@ -15,7 +15,5 @@ public class Main {
         }
 
         Display.destroy();
-
     }
-
 }

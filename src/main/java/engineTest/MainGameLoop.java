@@ -13,12 +13,10 @@ public class MainGameLoop {
 
     public static void main(String[] args) {
 
-
         DisplayManager.createDisplay();
         Loader loader = new Loader();
         StaticShader shader = new StaticShader();
         Renderer renderer = new Renderer(shader);
-
 
         RawModel model = OBJLoader.loadObjModel("stall", loader);
         TexturedModel staticModel = new TexturedModel(model,new ModelTexture(loader.loadTexture("stallTexture")));
