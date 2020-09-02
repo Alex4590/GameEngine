@@ -11,12 +11,26 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 
+/**
+ * Класс работы с шейдерами
+ */
 public abstract class ShaderProgram {
 
     private int programID;
+
+    /**
+     * Идентификатор вершинного шейдера
+     */
     private int vertexShaderID;
+
+    /**
+     * Идентификатор фрагментного шейдера
+     */
     private int fragmentShaderID;
 
+    /**
+     * Буфер матрицы
+     */
     private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 
     public ShaderProgram(String vertexFile,String fragmentFile){
