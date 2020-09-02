@@ -17,14 +17,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Loading file
+ * Загрузка файла
  */
 public class Loader {
 
+    /**
+     * Список Vertex Arrays Object
+     */
     private List<Integer> vaos = new ArrayList<Integer>();
+
+    /**
+     * Список Vertex Buffer Object
+     */
     private List<Integer> vbos = new ArrayList<Integer>();
+
+    /**
+     * Список текстур
+     */
     private List<Integer> textures = new ArrayList<Integer>();
 
+    /**
+     * Загрузка в VAO
+     *
+     * @param positions     - позиции
+     * @param textureCoords - координаты текстуры
+     * @param normals       - нормали
+     * @param indices       - индексы
+     * @return RowModel - необработанная модель
+     */
     public RawModel loadToVao(float[] positions, float[] textureCoords, float[] normals, int[] indices) {
         int vaoId = createVao();
         bindIndicesBuffer(indices);
@@ -37,6 +57,11 @@ public class Loader {
         return rawModel;
     }
 
+    /**
+     * Загрузка текстуры
+     *
+     * @param fileName - наименование файла с текстурой
+     */
     public int loadTexture(String fileName) {
         Texture texture = null;
         try {
@@ -52,6 +77,9 @@ public class Loader {
         return textureID;
     }
 
+    /**
+     * Создание VAO
+     */
     private int createVao() {
         int vaoId = GL30.glGenVertexArrays();
         vaos.add(vaoId);
@@ -60,6 +88,9 @@ public class Loader {
         return vaoId;
     }
 
+    /**
+     * Очистка
+     */
     public void cleanUp() {
         for (int vao : vaos) {
             GL30.glDeleteVertexArrays(vao);

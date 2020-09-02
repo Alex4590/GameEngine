@@ -7,12 +7,30 @@ import shadersClass.StaticShader;
 import texturesClass.TexturedModel;
 import toolbox.Maths;
 
+/**
+ * Класс работы с созданием изображения
+ */
 public class Renderer {
 
+    /**
+     * Поле зрения, угловое пространство
+     * которое видит глаз
+     */
     private static final float FOV = 70;
+
+    /**
+     * Ближний план
+     */
     private static final float NEAR_PLANE = 0.1f;
+
+    /**
+     * Дальний план
+     */
     private static final float FAR_PLANE = 1000;
 
+    /**
+     * Проекция матрицы
+     */
     private  Matrix4f projectionMatrix;
 
     public Renderer(StaticShader staticShader ) {
@@ -22,12 +40,21 @@ public class Renderer {
         staticShader.stop();
     }
 
+    /**
+     * Подготовка
+     */
     public void prepare() {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(0,0,0,1);
     }
 
+    /**
+     * Отрисовка изображения
+     *
+     * @param entity - основной объект
+     * @param shader - статический шейдер
+     */
     public void render(Entity entity, StaticShader shader) {
         TexturedModel model = entity.getModel();
         RawModel rawModel = model.getRawModel();
@@ -35,7 +62,7 @@ public class Renderer {
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
         GL20.glEnableVertexAttribArray(2);
-        Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
+        Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotationX(), entity.getRotationY(), entity.getRotationZ(), entity.getScale());
         shader.loadTransformationMatrix(transformationMatrix);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getTextureID());
@@ -46,6 +73,9 @@ public class Renderer {
         GL30.glBindVertexArray(0);
     }
 
+    /**
+     * Создание проекции матрицы
+     */
     private  void  createProjectionMatrix() {
         float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
         float y_scale = (float) (1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio;
