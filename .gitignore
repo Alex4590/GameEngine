@@ -144,3 +144,4 @@ nb-configuration.xml
 ##############################
 .DS_Store
 OpenGL3DGame.iml
+/.idea/
