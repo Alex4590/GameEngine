@@ -27,5 +27,13 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.newdawn</groupId>
+            <artifactId>slick</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/jars/slick-util.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
